@@ -29,10 +29,10 @@ if (empty($amountCents) || empty($externalId) || !$payer || empty($payer['cpf'])
 $host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? ($_SERVER['HTTP_HOST'] ?? '');
 $proto = $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'https';
 
-// Preço antigo (R$ 67,90) pode chegar de abas/URLs abertas antes da troca: força o atual (R$ 68,77).
+// Corrige valores antigos do produto principal para o preço atual da AIWA (R$ 42,89).
 $amount = (int) round((float) $amountCents);
 $qty = max(1, (int) ($item['quantity'] ?? 0) ?: (int) ($tracking['qty'] ?? 0) ?: 1);
-if ($amount === 6790 * $qty) $amount = 6877 * $qty;
+if ($amount === 3990 * $qty || $amount === 6790 * $qty || $amount === 6877 * $qty) $amount = 4289 * $qty;
 if ($amount === 2811) $amount = 2386; // upsell 1: R$ 28,11 -> R$ 23,86
 
 $payload = [

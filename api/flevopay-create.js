@@ -30,10 +30,10 @@ module.exports = async (req, res) => {
   const host = req.headers['x-forwarded-host'] || req.headers.host;
   const proto = req.headers['x-forwarded-proto'] || 'https';
 
-  // Preço antigo (R$ 67,90) pode chegar de abas/URLs abertas antes da troca: força o atual (R$ 68,77).
+  // Corrige valores antigos do produto principal para o preço atual da AIWA (R$ 42,89).
   let amount = Number(amountCents);
   const qty = Math.max(1, Number(item.quantity) || Number(tracking && tracking.qty) || 1);
-  if (amount === 6790 * qty) amount = 6877 * qty;
+  if (amount === 3990 * qty || amount === 6790 * qty || amount === 6877 * qty) amount = 4289 * qty;
   if (amount === 2811) amount = 2386; // upsell 1: R$ 28,11 -> R$ 23,86
 
   const payload = {
